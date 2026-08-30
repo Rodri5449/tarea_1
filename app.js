@@ -1,12 +1,14 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const multer = require('multer');
+const morgan = require('morgan');
 
 const app = express();
 const PORT = 8000;
 const db = new sqlite3.Database('./students.db');
 const upload = multer(); // parsea multipart/form-data (form-data en Postman), sin guardar archivos
 
+app.use(morgan('common')); // loguea cada petición en consola, como hace Flask por defecto
 app.use(express.urlencoded({ extended: true })); // soporta x-www-form-urlencoded
 app.use(express.json());
 
