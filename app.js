@@ -1,15 +1,17 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
+const multer = require('multer');
 
 const app = express();
 const PORT = 8000;
 const db = new sqlite3.Database('./students.db');
+const upload = multer(); // parsea multipart/form-data (form-data en Postman), sin guardar archivos
 
-app.use(express.urlencoded({ extended: true })); // soporta form-data / x-www-form-urlencoded (Postman)
+app.use(express.urlencoded({ extended: true })); // soporta x-www-form-urlencoded
 app.use(express.json());
 
 // Crear estudiante
-app.post('/students', (req, res) => {
+app.post('/students', upload.none(), (req, res) => {
   const { firstname, lastname, gender, age } = req.body;
   db.run(
     'INSERT INTO students (firstname, lastname, gender, age) VALUES (?, ?, ?, ?)',
@@ -39,7 +41,7 @@ app.get('/student/:id', (req, res) => {
 });
 
 // Modificar un estudiante
-app.put('/student/:id', (req, res) => {
+app.put('/student/:id', upload.none(), (req, res) => {
   const { firstname, lastname, gender, age } = req.body;
   db.run(
     'UPDATE students SET firstname = ?, lastname = ?, gender = ?, age = ? WHERE id = ?',
