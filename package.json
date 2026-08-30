@@ -1,0 +1,13 @@
+{
+  "name": "api-students-node",
+  "version": "1.0.0",
+  "description": "API REST con node.js y SQLite3 (equivalente node.js del taller api-students en Python/Flask)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "sqlite3": "^5.1.7"
+  }
+}
